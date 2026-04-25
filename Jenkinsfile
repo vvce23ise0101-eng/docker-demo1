@@ -10,13 +10,13 @@ pipeline {
 
         stage('Build Image') {
             steps {
-                sh 'docker build -t myapp .'
+                bat 'docker build -t myapp .'
             }
         }
 
         stage('Tag Image') {
             steps {
-                sh 'docker tag myapp srsuhtir/myapp:v1'
+                bat 'docker tag myapp srsuhtir/myapp:v1'
             }
         }
 
@@ -26,14 +26,14 @@ pipeline {
                     credentialsId: 'dockerhub-creds',
                     usernameVariable: 'USER',
                     passwordVariable: 'PASS')]) {
-                    sh 'echo $PASS | docker login -u $USER --password-stdin'
+                    bat 'echo $PASS | docker login -u $USER --password-stdin'
                 }
             }
         }
 
         stage('Push Image') {
             steps {
-                sh 'docker push srsuhtir/myapp:v1'
+                bat 'docker push srsuhtir/myapp:v1'
             }
         }
     }
